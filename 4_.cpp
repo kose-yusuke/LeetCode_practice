@@ -1,3 +1,4 @@
+//　中央値を二分探索で探索する問題
 class Solution {
 public:
     double findMedianSortedArrays(vector<int>& nums1, vector<int>& nums2) {
@@ -12,7 +13,7 @@ public:
         int low = 0, high = m;
         
         while (low <= high) {
-            // ここの分割端の決め方が肝っぽい
+            // ここの分割端の決め方が肝っぽい. 二分探索で, どう分割設定という部分
             int partitionM = (low + high) / 2;
             int partitionN = (m + n + 1) / 2 - partitionM;
             
@@ -26,6 +27,7 @@ public:
             int minN = (partitionN == n) ? INT_MAX : nums2[partitionN];
             
             // nums1の左半分の最大値がnums2の右半分の最小値より小さく,  ...
+            // 二分探索における停止条件の設定
             if (maxM <= minN && maxN <= minM) {
                 if ((m + n) % 2 == 0) {
                     return (double)(max(maxM, maxN) + min(minM, minN)) / 2;
@@ -34,6 +36,7 @@ public:
                     return (double)max(maxM, maxN);
                 }
             } 
+            //二分探索における更新の部分
             // nums1の左の最大がnums2の右の最小より大きい時
             else if (maxM > minN) {
                 // Mの分割端をずらす, するとそれに引きづられてNの分割端もずれて調整される
